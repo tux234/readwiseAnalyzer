@@ -1,7 +1,15 @@
 from analysis import analyze_readwise_articles
 
 def categorize_articles_by_rating(articles):
-    """Categorize articles based on their Fabric analysis rating."""
+    """
+    Categorize articles based on their Fabric analysis rating.
+
+    Args:
+        articles (list): A list of articles with URLs and analyses.
+
+    Returns:
+        tuple: Categorized lists of articles for shortlist, read this week, weekend list, and archive.
+    """
     shortlist = []
     read_this_week = []
     weekend_list = []
@@ -29,6 +37,9 @@ def categorize_articles_by_rating(articles):
     return shortlist, read_this_week, weekend_list, archive
 
 def main():
+    """
+    Main function to analyze and categorize Readwise articles.
+    """
     results = analyze_readwise_articles()
 
     # Categorize articles based on their ratings

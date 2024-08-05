@@ -8,8 +8,13 @@ load_dotenv()
 
 READWISE_API_KEY = os.getenv('READWISE_API_KEY')
 
-# Load configuration from config.yml
 def load_config():
+    """
+    Load configuration from the config.yml file.
+
+    Returns:
+        dict: Configuration data from the YAML file.
+    """
     with open('config/config.yml', 'r') as file:
         return yaml.safe_load(file)
 
@@ -17,8 +22,16 @@ config = load_config()
 base_url = config['readwise']['base_url']
 endpoints = config['readwise']['endpoints']
 
-def fetch_source_urls(location):
-    """Fetch source URLs from the Readwise API based on location and filter out certain URLs."""
+def fetch_source_urls(location='new'):
+    """
+    Fetch source URLs from the Readwise API based on location and filter out certain URLs.
+
+    Args:
+        location (str): The location parameter to filter documents. Defaults to 'new'.
+
+    Returns:
+        list: A list of filtered source URLs.
+    """
     url = base_url + endpoints['list_documents']['url']
     headers = {"Authorization": f"Token {READWISE_API_KEY}"}
     params = {'location': location}
@@ -37,11 +50,10 @@ def fetch_source_urls(location):
     else:
         raise Exception(f"Failed to fetch documents: {response.status_code}")
 
-# To Test uncomment the below
-# if __name__ == "__main__":
-#     try:
-#         source_urls = fetch_source_urls(location='feed')
-#         for url in source_urls:
-#             print(url)
-#     except Exception as e:
-#         print(f"Error: {e}")
+if __name__ == "__main__":
+    try:
+        source_urls = fetch_source_urls()
+        for url in source_urls:
+            print(url)
+    except Exception as e:
+        print(f"Error: {e}")
