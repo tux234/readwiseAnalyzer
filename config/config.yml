@@ -1,0 +1,37 @@
+readwise:
+  base_url: "https://readwise.io/api/v3/"
+
+  endpoints:
+    create_document:
+      url: "save/"
+      method: "POST"
+      parameters:
+        url: "string"
+        html: "string"
+        should_clean_html: "boolean"
+        title: "string"
+        author: "string"
+        summary: "string"
+        published_date: "string"  # ISO 8601 format
+        image_url: "string"
+        location: "string"  # Options: new, later, archive, feed
+        category: "string"  # Options: article, email, rss, highlight, note, pdf, epub, tweet, video
+        saved_using: "string"
+        tags: "list"
+        notes: "string"
+
+    list_documents:
+      url: "list/"
+      method: "GET"
+      parameters:
+        id: "string"
+        updatedAfter: "string"  # ISO 8601 format
+        location: "string"  # Options: new, later, shortlist, archive, feed
+        category: "string"  # Options: article, email, rss, highlight, note, pdf, epub, tweet, video
+        pageCursor: "string"
+
+  authentication:
+    token: "your_readwise_api_key"
+
+  rate_limiting:
+    base_rate: "20 requests per minute"
