@@ -27,7 +27,7 @@ readwise-analyzer/
 │   └── run.py                 # Entry point for the application
 │
 ├── config/
-│   ├── config.yml             # Configuration settings
+│   └── config.yml             # Configuration settings
 │
 ├── docs/                      # Documentation
 │   ├── README.md              # Project overview (this file)
