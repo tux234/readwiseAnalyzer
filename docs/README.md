@@ -1,6 +1,6 @@
 # Readwise Analyzer
 
-Readwise Analyzer is a Python application designed to help users manage their reading lists by fetching, analyzing, and categorizing articles from the Readwise Reader feed. It integrates with an AI tool called Fabric to rate each article, making it easier to decide which articles to prioritize for reading.
+Readwise Analyzer is a Python application designed to help users manage their reading lists by fetching, analyzing, and categorizing articles from the Readwise Reader feed. It integrates with an AI tool called [Fabric](https://github.com/danielmiessler/fabric) to rate each article, making it easier to decide which articles to prioritize for reading.
 
 ## Features
 
