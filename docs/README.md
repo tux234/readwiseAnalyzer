@@ -26,20 +26,15 @@ readwise-analyzer/
 │   ├── analysis.py            # Main analysis logic
 │   └── run.py                 # Entry point for the application
 │
-├── tests/                     # Unit tests
 ├── config/
 │   ├── config.yml             # Configuration settings
-│   └── secrets.json           # Example secrets file
 │
 ├── docs/                      # Documentation
 │   ├── README.md              # Project overview (this file)
-│   ├── setup.md               # Setup instructions
-│   └── usage.md               # Usage instructions
 │
 ├── .gitignore                 # Git ignore file
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Environment variables file
-└── setup.py                   # Package setup script
 ```
 
 ## Installation
