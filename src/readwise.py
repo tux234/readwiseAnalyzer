@@ -8,6 +8,10 @@ load_dotenv()
 
 READWISE_API_KEY = os.getenv('READWISE_API_KEY')
 
+# Configure a shared HTTP session and default timeout to improve I/O performance
+_session = requests.Session()
+_READWISE_TIMEOUT = 10  # seconds
+
 def load_config():
     """
     Load configuration from the config.yml file.
@@ -36,7 +40,9 @@ def fetch_source_urls(location='new'):
     headers = {"Authorization": f"Token {READWISE_API_KEY}"}
     params = {'location': location}
 
-    response = requests.get(url, headers=headers, params=params)
+    response = _session.get(
+        url, headers=headers, params=params, timeout=_READWISE_TIMEOUT
+    )
     if response.status_code == 200:
         documents = response.json().get('results', [])
 

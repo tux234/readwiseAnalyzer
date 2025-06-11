@@ -1,6 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 
+# Cache scraped content per URL in memory and reuse a shared session
+from functools import lru_cache
+
+# Shared session and timeout for HTTP requests
+_session = requests.Session()
+_SCRAPER_TIMEOUT = 10  # seconds
+
+@lru_cache(maxsize=None)
 def scrape_content(url):
     """
     Scrape the main content from a given URL.
@@ -17,7 +25,7 @@ def scrape_content(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
     }
-    response = requests.get(url, headers=headers)
+    response = _session.get(url, headers=headers, timeout=_SCRAPER_TIMEOUT)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
         paragraphs = soup.find_all('p')
