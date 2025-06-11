@@ -3,14 +3,14 @@ from dotenv import load_dotenv
 import os
 import yaml
 
-# Load environment variables
 load_dotenv()
 
 READWISE_API_KEY = os.getenv('READWISE_API_KEY')
+if not READWISE_API_KEY:
+    raise EnvironmentError("READWISE_API_KEY must be set in environment or .env file")
 
-# Configure a shared HTTP session and default timeout to improve I/O performance
 _session = requests.Session()
-_READWISE_TIMEOUT = 10  # seconds
+_READWISE_TIMEOUT = 10
 
 def load_config():
     """
@@ -36,6 +36,8 @@ def fetch_source_urls(location='new'):
     Returns:
         list: A list of filtered source URLs.
     """
+    if location not in ('new', 'later', 'shortlist', 'archive', 'feed'):
+        raise ValueError(f"Invalid location: {location!r}")
     url = base_url + endpoints['list_documents']['url']
     headers = {"Authorization": f"Token {READWISE_API_KEY}"}
     params = {'location': location}
