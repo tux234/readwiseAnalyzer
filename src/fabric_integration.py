@@ -1,4 +1,5 @@
 import subprocess
+import re
 
 def analyze_with_fabric(content, pattern):
     """
@@ -14,14 +15,13 @@ def analyze_with_fabric(content, pattern):
     Raises:
         Exception: If the Fabric command fails.
     """
-    # Construct the command without a file, using input redirection
-    command = f"fabric --pattern {pattern}"
+    if not re.match(r'^[\w-]+$', pattern):
+        raise ValueError(f"Invalid pattern: {pattern!r}")
 
-    # Use subprocess to send the content to Fabric's stdin
+    command = ["fabric", "--pattern", pattern]
     result = subprocess.run(
         command,
         input=content,
-        shell=True,
         capture_output=True,
         text=True
     )

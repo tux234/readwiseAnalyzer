@@ -1,12 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse
+import socket
+from ipaddress import ip_address
 
-# Cache scraped content per URL in memory and reuse a shared session
 from functools import lru_cache
 
-# Shared session and timeout for HTTP requests
 _session = requests.Session()
-_SCRAPER_TIMEOUT = 10  # seconds
+_SCRAPER_TIMEOUT = 10
 
 @lru_cache(maxsize=None)
 def scrape_content(url):
@@ -22,6 +23,17 @@ def scrape_content(url):
     Raises:
         Exception: If the URL cannot be scraped due to HTTP errors.
     """
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        raise ValueError(f"Unsupported URL scheme: {parsed.scheme!r}")
+
+    try:
+        host_ip = socket.gethostbyname(parsed.hostname)
+        if ip_address(host_ip).is_private:
+            raise ValueError(f"Access to private IP {host_ip} is not allowed")
+    except Exception as e:
+        raise ValueError(f"Invalid host {parsed.hostname}: {e}")
+
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
     }
